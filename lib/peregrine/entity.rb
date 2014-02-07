@@ -1,5 +1,6 @@
 require 'peregrine/collections/common'
 require 'peregrine/features'
+require 'securerandom'
 
 module Peregrine
   # == Summary
@@ -27,6 +28,9 @@ module Peregrine
     # Array of Component objects attached to this Entity.
     attr_reader :components
     
+    # Symbol representing the UUID of this Entity.
+    attr_reader :uuid
+    
     # Creates a new Entity instance and adds the given Component constants or
     # instances to the Entity. Yields the newly created Entity if a block is
     # given.
@@ -39,6 +43,7 @@ module Peregrine
     #    end # => Entity 'Example' 0xdf7258 (1)
     def initialize(*components)
       @components = [].extend(Collections::Common)
+      @uuid       = SecureRandom.uuid.to_sym
       add_components(*components)
       yield self if block_given?
     end
@@ -123,7 +128,7 @@ module Peregrine
     
     # Presents a human-readable summary of the Entity.
     def to_s
-      "Entity '#{name}' #{id} (#{@components.size})"
+      "Entity '#{name}' #{uuid} (#{@components.size})"
     end
     alias :inspect :to_s
   end
