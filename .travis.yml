@@ -1,0 +1,12 @@
+language: ruby
+rvm:
+  - 1.9.2
+  - 1.9.3
+  - jruby-19mode
+  - rbx
+matrix:
+  allow_failures:
+    - rvm: rbx
+script: bundle exec rake spec
+notifications:
+  email: false
