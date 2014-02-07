@@ -1,25 +1,25 @@
 require 'spec_helper'
 
 describe Peregrine::Collections::Tagged do
-  let(:collection) { [42, 13, :untagged].extend(subject) }
-  before(:all) do
-    Fixnum.send(:include, Peregrine::Features::Taggable)
-    42.add_tags(:test, :fixnum)
-    13.add_tags(:fixnum)
+  let(:collection) { [:test, :symbol, :untagged].extend(subject) }
+  before(:each) do
+    Symbol.send(:include, Peregrine::Features::Taggable)
+    :test.add_tags('test', 'symbol')
+    :symbol.add_tags('symbol')
   end
   
   describe '#tagged' do
     it 'returns an array of items with all of the given tags' do
-      expect(collection.tagged(:test, :fixnum)).to eql [collection.first]
+      expect(collection.tagged('test', 'symbol')).to eql [collection.first]
     end
     
     context 'when given a block' do
       it 'yields each matching item' do
         expectation = []
-        collection.tagged(:test, :fixnum) do |item|
+        collection.tagged('test', 'symbol') do |item|
           expectation << item
         end
-        expect(expectation).to eql collection.tagged(:test, :fixnum)
+        expect(expectation).to eql collection.tagged('test', 'symbol')
       end
     end
     
@@ -31,21 +31,21 @@ describe Peregrine::Collections::Tagged do
   
   describe '#any_tagged' do
     it 'returns an array of items with any of the given tags' do
-      expect(collection.any_tagged(:test, :fixnum)).to eql collection[0..1]
+      expect(collection.any_tagged('test', 'symbol')).to eql collection[0..1]
     end
     
     context 'when given a block' do
       it 'yields each matching item' do
         expectation = []
-        collection.any_tagged(:test, :fixnum) do |item|
+        collection.any_tagged('test', 'symbol') do |item|
           expectation << item
         end
-        expect(expectation).to eql collection.any_tagged(:test, :fixnum)
+        expect(expectation).to eql collection.any_tagged('test', 'symbol')
       end
     end  
     
     it 'returns an array extended with Peregrine::Collections' do
-      extensions = collection.any_tagged(:tag).singleton_class.included_modules
+      extensions = collection.any_tagged(:test).singleton_class.included_modules
       expect(extensions).to include Peregrine::Collections
     end
   end
