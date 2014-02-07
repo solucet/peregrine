@@ -156,9 +156,9 @@ describe Peregrine::EntityManager do
       expect(subject.systems.first.class).to be Peregrine::System
     end
     
-    it 'adds the EntityManager to each System' do
+    it 'adds the EntityManager to the System' do
       subject.add_systems(sys = Peregrine::System.new)
-      expect(sys.managers).to include subject
+      expect(sys.manager).to be subject
     end
     
     it 'returns the array of operating System instances' do
@@ -179,10 +179,10 @@ describe Peregrine::EntityManager do
       expect(prepared_manager.systems).to be_empty
     end
     
-    it 'removes the EntityManager from each System' do
+    it 'removes the EntityManager from the System' do
       sys = Peregrine::System.new(subject)
       subject.remove_systems!(Peregrine::System)
-      expect(sys.managers).to be_empty
+      expect(sys.manager).to be nil
     end
     
     it 'returns an array of removed System instances' do

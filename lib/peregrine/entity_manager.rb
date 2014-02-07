@@ -125,15 +125,15 @@ module Peregrine
     end
     
     # Adds the given System instances (or instantiated System constants) to the
-    # EntityManager, updating the array of managers each System contains.
-    # Returns the array of System objects operating in the EntityManager.
+    # EntityManager, updating the System's manager. Returns the array of System
+    # objects operating in the EntityManager.
     def add_systems(*systems)
       systems.each do |system|
         if system.class == Class
           system = system.new(self)
         else
           @systems.push(system)
-          system.managers.push(self).uniq!
+          system.manager = self
         end
       end
       @systems
@@ -141,13 +141,13 @@ module Peregrine
     alias :add_system :add_systems
     
     # Removes the given System instances (or all System classes of the given
-    # constants) from the EntityManager, updating the array of managers each
-    # System contains. Returns an array of the deleted System instances.
+    # constants) from the EntityManager, updating the manager of each System.
+    # Returns an array of the removed System instances.
     def remove_systems!(*systems)
       removed = []
       @systems.reject! do |system|
         if systems.include?(system) || systems.include?(system.class)
-          system.managers.delete(self)
+          system.manager = nil
           removed.push(system)
         else false end
       end

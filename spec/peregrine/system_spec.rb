@@ -37,13 +37,6 @@ describe Peregrine::System do
     end
   end
   
-  describe '@managers' do
-    it 'is extended with Peregrine::Collections::Common' do
-      extensions = subject.managers.singleton_class.included_modules
-      expect(extensions).to include Peregrine::Collections::Common
-    end
-  end
-  
   describe '#selector' do
     it 'returns a Proc object' do
       expect(subject.selector).to be_an_instance_of Proc
@@ -61,11 +54,6 @@ describe Peregrine::System do
     it 'returns Entity objects that pass through #selector' do
       prepared_manager.add_system(subject)
       expect(subject.entities).to eq [:test, true]
-    end
-    
-    it 'returns an array extended with Peregrine::Collections' do
-      extensions = subject.entities.singleton_class.included_modules
-      expect(extensions).to include Peregrine::Collections
     end
   end
   

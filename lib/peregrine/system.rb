@@ -5,7 +5,7 @@ module Peregrine
   # == Summary
   # 
   # The System class implements logic for a collection of Entity objects and
-  # resides within EntityManager instances. The System class present in the
+  # resides within an EntityManager instance. The System class present in the
   # Peregrine framework serves as a basis for creating subclasses to implement
   # logic and perform no such logic themselves (in fact, they raise a
   # +NotImplementedError+ when updated).
@@ -18,17 +18,17 @@ module Peregrine
   # 
   # In addition to this, System classes may be enabled or disabled. Disabled
   # System classes may still be explicitly updated by calling their +update+
-  # method, but will not automatically fire when any EntityManager that they
+  # method, but will not automatically fire when the EntityManager that they
   # belong to calls its +update+ method. Systems are enabled by default, but may
   # be disabled when instanced by passing a block or calling the +configure+
   # method with a block.
   # 
   # Most System classes are expected to operate on a limited subset of the
-  # available Entity objects within each EntityManager that contains the System.
-  # As such, the +selector+ method has been provided to allow filtering each
+  # available Entity objects within the EntityManager that contains the System.
+  # As such, the +selector+ method has been provided to allow filtering the
   # EntityManager's managed Entity objects. The +selector+ method returns a
   # Proc object which is used by the +select+ method on the +entities+ array
-  # owned by each EntityManager. When overwritten, the +selector+ method ensures
+  # owned by the EntityManager. When overwritten, the +selector+ method ensures
   # that the +entities+ method of the System only returns Entity objects that
   # pass through the +selector+ method's block.
   # 
@@ -62,10 +62,10 @@ module Peregrine
     include Features
     
     # The EntityManager object using this System instance.
-    attr_reader :managers
+    attr_accessor :manager
     
-    # Creates a new System instance operating within the given EntityManagers
-    # and automatically adds the System to each EntityManager. Yields the newly
+    # Creates a new System instance operating within the given EntityManager
+    # and automatically adds the System to the EntityManager. Yields the newly
     # created System if a block is given.
     # 
     # ==== Example
@@ -75,13 +75,11 @@ module Peregrine
     #      system.name = 'Example'
     #      # Systems are enabled by default, but we want this one disabled.
     #      system.disable
-    #    end # => - System 'Example' 0x1724d80 <[Entity Manager 'Example' ...]>
-    def initialize(*managers)
-      @enabled  = true
-      @managers = managers.extend(Collections::Common)
-      @managers.each do |manager|
-        manager.systems.push(self).uniq! if manager.respond_to?(:systems)
-      end
+    #    end # => - System 'Example' 0x1724d80 <Entity Manager 'Example' ...>
+    def initialize(manager = nil)
+      @enabled = true
+      @manager = manager
+      @manager.systems.push(self) if @manager.respond_to?(:systems)
       yield self if block_given?
     end
     
@@ -96,16 +94,14 @@ module Peregrine
     # Returns an array of all of the Entity objects that this System should act
     # upon. This method is intended to be used in the body of a subclass'
     # +update+ method in order to facilitate only operating on the desired
-    # Entity objects. Entity objects are collected by calling +select+ on each
+    # Entity objects. Entity objects are collected by calling +select+ on the
     # EntityManager's +entities+ array with a block supplied by the System's
     # +selector+ method. Yields each selected Entity object if a block is given.
     def entities
-      entity_list = []
-      @managers.each do |manager|
-        entity_list.push(*manager.entities.select(&selector))
+      return [] unless @manager.respond_to?(:entities)
+      @manager.entities.select(&selector).each do |entity|
+        yield entity if block_given?
       end
-      entity_list.each { |entity| yield entity } if block_given?
-      entity_list.extend(Collections)
     end
     
     # Explicitly enables the System.
@@ -117,17 +113,16 @@ module Peregrine
     # Explicitly returns +true+ if the System is enabled, +false+ otherwise.
     def enabled?() @enabled ? true : false end
     
-    # Called whenever an EntityManager with this System is updated. This method
+    # Called whenever the EntityManager with this System is updated. This method
     # is intended to be overwritten in subclasses by developers in order to
-    # implement logic. Only called by an EntityManager if the System is
+    # implement logic. Only called by the EntityManager if the System is
     # enabled.  Raises a +NotImplementedError+ by default.
     def update() raise NotImplementedError end
     
     # Presents a human-readable summary of the System.
     def to_s
-      manager_list = @managers.map { |m| "#{m.name} #{m.id}" }.join(', ')
       status       = enabled? ? '+' : '-'
-      "#{status} System '#{name}' #{id} <#{manager_list}>"
+      "#{status} System '#{name}' #{id} <#{manager.name} #{manager.id}>"
     end
     alias :inspect :to_s
   end
