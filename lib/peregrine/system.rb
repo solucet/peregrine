@@ -121,7 +121,7 @@ module Peregrine
     
     # Presents a human-readable summary of the System.
     def to_s
-      status       = enabled? ? '+' : '-'
+      status = enabled? ? '+' : '-'
       "#{status} System '#{name}' #{id} <#{manager.name} #{manager.id}>"
     end
     alias :inspect :to_s
