@@ -12,6 +12,7 @@ Gem::Specification.new do |gem|
   gem.email    = ['solucet@icloud.com']
   gem.homepage = 'http://github.com/solucet/peregrine'
   gem.platform = Gem::Platform::RUBY
+  gem.license  = 'MIT'
   
   # Gem summary and description.
   gem.summary     = 'Flexible Entity-Component framework for Ruby.'
