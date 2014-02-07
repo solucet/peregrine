@@ -1,0 +1,4 @@
+pkg/
+rdoc/
+.ruby-version
+Gemfile.lock
