@@ -69,10 +69,10 @@ describe Peregrine::System do
     end
   end
   
-  describe '#update' do
+  describe '#process' do
     it 'raises NotImplementedError' do
       subject.enable
-      expect { subject.update }.to raise_error(NotImplementedError)
+      expect { subject.process }.to raise_error(NotImplementedError)
     end
   end
 end

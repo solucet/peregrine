@@ -50,9 +50,9 @@ describe Peregrine::EntityManager do
     end
   end
   
-  describe '#update' do
-    it 'updates all operating System instances' do
-      expect { prepared_manager.update }.to raise_error(NotImplementedError)
+  describe '#process' do
+    it 'processes all operating System instances' do
+      expect { prepared_manager.process }.to raise_error(NotImplementedError)
     end
   end
   

@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
   gem.version  = Peregrine::VERSION
   gem.authors  = ['Kevin Owen']
   gem.email    = ['solucet@icloud.com']
-  gem.homepage = 'http://github.com/solucet/peregrine'
+  gem.homepage = 'https://github.com/solucet/peregrine'
   gem.platform = Gem::Platform::RUBY
   gem.license  = 'MIT'
   

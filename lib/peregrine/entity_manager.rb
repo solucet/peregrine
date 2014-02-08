@@ -73,12 +73,12 @@ module Peregrine
       yield self if block_given?
     end
     
-    # Calls +update+ on each enabled System within this EntityManager. The
-    # +update+ method is _intended_ to be called once per 'tick,' but the actual
+    # Calls +process+ on each enabled System within this EntityManager. The
+    # +process+ method is _intended_ to be called once per tick, but the actual
     # implementation is left up to the developer. Returns the array of System
     # objects operating within the EntityManager.
-    def update
-      @systems.each { |system| system.update if system.enabled? }
+    def process
+      @systems.each { |system| system.process if system.enabled? }
     end
     
     # Spawns a new Entity with the given Components and pushes the new Entity

@@ -8,19 +8,19 @@ module Peregrine
   # resides within an EntityManager instance. The System class present in the
   # Peregrine framework serves as a basis for creating subclasses to implement
   # logic and perform no such logic themselves (in fact, they raise a
-  # +NotImplementedError+ when updated).
+  # +NotImplementedError+ when processed).
   # 
   # == Usage
   # 
   # The default System class is very minimal and performs no actual logic on its
   # own. Individual developers are intended to subclass the System and implement
-  # the needed logic in their own +update+ methods.
+  # the needed logic in their own +process+ methods.
   # 
   # In addition to this, System classes may be enabled or disabled. Disabled
-  # System classes may still be explicitly updated by calling their +update+
+  # System classes may still be explicitly updated by calling their +process+
   # method, but will not automatically fire when the EntityManager that they
-  # belong to calls its +update+ method. Systems are enabled by default, but may
-  # be disabled when instanced by passing a block or calling the +configure+
+  # belong to calls its +process+ method. Systems are enabled by default, but
+  # may be disabled when instanced by passing a block or calling the +configure+
   # method with a block.
   # 
   # Most System classes are expected to operate on a limited subset of the
@@ -33,21 +33,21 @@ module Peregrine
   # pass through the +selector+ method's block.
   # 
   # Given the implementation of the +selector+, it is _highly_ recommended that
-  # your wrap your System's +update+ methods in the +entities+ method to make
+  # you wrap your Systems' +process+ methods in the +entities+ method to make
   # sure that they only implement logic for the properly selected Entities.
   # 
   # == Example
   # 
   # To demonstrate how to write a System subclass, we'll build a simple System
   # that simply acts on Entity objects that contain Components and removes the
-  # Components each update.
+  # Components when processed.
   # 
   #    class Remover < Peregrine::System
   #      def selector
   #        ->(entity) { !entity.components.empty? }
   #      end
   #      
-  #      def update
+  #      def process
   #        entities.each do |entity|
   #          entity.remove_components!(*entity.component_classes)
   #        end
@@ -117,7 +117,7 @@ module Peregrine
     # is intended to be overwritten in subclasses by developers in order to
     # implement logic. Only called by the EntityManager if the System is
     # enabled.  Raises a +NotImplementedError+ by default.
-    def update() raise NotImplementedError end
+    def process() raise NotImplementedError end
     
     # Presents a human-readable summary of the System.
     def to_s
