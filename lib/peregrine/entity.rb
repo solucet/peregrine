@@ -61,12 +61,13 @@ module Peregrine
     #    entity.add_components(Example) # => [Component 'Example' ...]
     def add_components(*components)
       components.each do |component|
-        if component.class == Class
-          component = component.new(self)
-        else
-          component.remove_parent!
-          component.parent = self
-        end
+        component = component.new if component.class == Class
+        #if component.class == Class
+        #  component = component.new(self)
+        #else
+        #  component.remove_parent!
+        #  component.parent = self
+        #end
         unless component_classes.include?(component.class)
           @components.push(component)
         end

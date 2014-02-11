@@ -8,15 +8,6 @@ module Peregrine
   # store information or as a "flag" for an Entity to be used by a System to
   # implement the actual logic.
   # 
-  # == Parents
-  # 
-  # Each Component has a +parent+ -- that is, an object that it belongs to. It
-  # is expected that a parent will be a kind of Entity, though this is not
-  # enforced by the Component class itself: usage of the parent is left entirely
-  # up to the individual developer. It should be noted, however, that Components
-  # will make use of Entity methods if they are found in the parent, allowing
-  # the Component to automatically add and remove itself from its parent.
-  # 
   # == Usage
   # 
   # It is expected that developers will subclass the Component class in order
@@ -45,18 +36,10 @@ module Peregrine
   class Component
     include Features
     
-    # The parent object which owns this Component.
-    # *Note*: although there is a writer for this attribute, it is _strongly_
-    # recommended that you do _not_ use it in favor of the +#change_parent+
-    # method.
-    attr_accessor :parent
-    
-    # Create a new Component instance. The parent is +nil+ unless given. If a
-    # Peregrine::Entity object is given as the parent, the Component adds itself
-    # to the Entity automatically. Yields the newly instanced Component if a
-    # block is given.
-    def initialize(parent = nil, *data_args)
-      change_parent(parent) unless parent.nil?
+    # Create a new Component instance. Any arguments given to this method are 
+    # passed to the +initialize_data+ method. Yields the newly instanced
+    # Component if a block is given.
+    def initialize(*data_args)
       initialize_data(*data_args)
       yield self if block_given?
     end
@@ -75,26 +58,26 @@ module Peregrine
     #    component = Peregrine::Component.new
     #    entity    = Peregrine::Entity.new { |e| e.name = 'Example' }
     #    component.change_parent(entity) # => Entity 'Example' 0x1a8c540 (1)
-    def change_parent(new_parent)
-      remove_parent!
-      @parent = new_parent
-      @parent.add_component(self) if @parent.respond_to?(:add_component)
-      @parent
-    end
+    #def change_parent(new_parent)
+    #  remove_parent!
+    #  @parent = new_parent
+    #  @parent.add_component(self) if @parent.respond_to?(:add_component)
+    #  @parent
+    #end
     
     # Removes the Component from its parent object and sets the parent to +nil+.
-    def remove_parent!
-      if @parent.respond_to?(:remove_component!)
-        @parent.remove_component!(self.class)
-      end
-      @parent = nil
-    end
+    #def remove_parent!
+    #  if @parent.respond_to?(:remove_component!)
+    #    @parent.remove_component!(self.class)
+    #  end
+    #  @parent = nil
+    #end
     
     # Presents a human-readable summary of the Component.
-    def to_s
-      parent_string = @parent.nil? ? 'nil' : @parent.inspect
-      "Component '#{name}' #{id} <#{parent_string}>"
-    end
-    alias :inspect :to_s
+    #def to_s
+    #  parent_string = @parent.nil? ? 'nil' : @parent.inspect
+    #  "Component '#{name}' #{id}"
+    #end
+    #alias :inspect :to_s
   end
 end
