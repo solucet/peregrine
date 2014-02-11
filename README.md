@@ -21,7 +21,7 @@ $ cd peregrine/ && bundle
 ```
 
 ## Documentation
-The framework has been heavily documented with information and should serve you well. If you installed Peregrine from the GitHub repository and installed the development dependencies, you can generate a local copy of its RDoc documentation by running `rake rdoc`.
+The framework has been heavily documented with information and should serve you well. If you installed Peregrine from the GitHub repository and installed the development dependencies, you can generate a local copy of its RDoc documentation by running `rake rdoc`. The documentation is also available [online from RubyDoc][rdoc].
 
 If you are unfamiliar with Entity-Component design, it is highly recommended that you read about it in addition to reading the documentation for the Peregrine framework. Chris Powell wrote a [great series of tutorials][recf-tutorial] on using EC design in JRuby on his blog which also includes links to further reading on the subject.
 
@@ -32,5 +32,6 @@ Special thanks go to Chris Powell, as the Peregrine framework was conceptually i
 Peregrine is made available under the terms of the MIT License. See the included LICENSE file for more information.
 
 [peregrine]:     https://github.com/solucet/peregrine
+[rdoc]:          http://rubydoc.info/gems/peregrine/0.1.1/frames
 [recf]:          https://github.com/cpowell/ruby-entity-component-framework
 [recf-tutorial]: http://cbpowell.wordpress.com/2012/10/30/
