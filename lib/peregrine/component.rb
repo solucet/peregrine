@@ -15,7 +15,7 @@ module Peregrine
   # it is important to note that you should _not_ overwrite the +#initialize+
   # method, and instead overwite the +#initialize_data+ method in order to
   # instantiate a Component. Any additional arguments given to +Component.new+
-  # past the parent object are passed along to the +#initialize_data+ method.
+  # are passed along to the +#initialize_data+ method.
   # 
   # == Example
   # 
