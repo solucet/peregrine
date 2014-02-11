@@ -22,8 +22,8 @@ Gem::Specification.new do |gem|
   }.gsub(/\s+/, " ").strip
   
   # Development dependencies.
-  ['rake', 'rdoc', 'rspec'].each do |dependency|
-    gem.add_development_dependency(dependency)
+  { rake: '~> 10.1', rdoc: '~> 4.1', rspec: '~> 2.14' }.each do |dep, version|
+    gem.add_development_dependency(dep.to_s, version)
   end
   
   # File and directory information.
