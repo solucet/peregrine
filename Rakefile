@@ -81,7 +81,7 @@ namespace :gem do
   
   desc 'Build and push latest gem to rubygems.org'
   task :release => :build do
-    sh "gem push pkg/peregrine-#{Peregrine::VERSION}"
+    sh "gem push pkg/peregrine-#{Peregrine::VERSION}.gem"
   end
   
   desc 'Uninstall all peregrine gems'
