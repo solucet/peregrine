@@ -62,12 +62,6 @@ module Peregrine
     def add_components(*components)
       components.each do |component|
         component = component.new if component.class == Class
-        #if component.class == Class
-        #  component = component.new(self)
-        #else
-        #  component.remove_parent!
-        #  component.parent = self
-        #end
         unless component_classes.include?(component.class)
           @components.push(component)
         end

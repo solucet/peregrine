@@ -49,11 +49,6 @@ describe Peregrine::Entity do
       expect(subject.components.first.class).to be component
     end
     
-    #it 'updates Component parents when given existing instances' do
-    #  subject.add_components(component_instance)
-    #  expect(subject.components.first.parent).to be subject
-    #end
-    
     it 'ignores Components already present' do
       expect(prepared_entity.add_components(component).size).to be 2
     end

@@ -50,34 +50,10 @@ module Peregrine
     def initialize_data
     end
     
-    # Removes the Component from its previous parent, updates the parent, and
-    # automatically adds the Component to the new parent.
-    # 
-    # ==== Example
-    # 
-    #    component = Peregrine::Component.new
-    #    entity    = Peregrine::Entity.new { |e| e.name = 'Example' }
-    #    component.change_parent(entity) # => Entity 'Example' 0x1a8c540 (1)
-    #def change_parent(new_parent)
-    #  remove_parent!
-    #  @parent = new_parent
-    #  @parent.add_component(self) if @parent.respond_to?(:add_component)
-    #  @parent
-    #end
-    
-    # Removes the Component from its parent object and sets the parent to +nil+.
-    #def remove_parent!
-    #  if @parent.respond_to?(:remove_component!)
-    #    @parent.remove_component!(self.class)
-    #  end
-    #  @parent = nil
-    #end
-    
     # Presents a human-readable summary of the Component.
-    #def to_s
-    #  parent_string = @parent.nil? ? 'nil' : @parent.inspect
-    #  "Component '#{name}' #{id}"
-    #end
-    #alias :inspect :to_s
+    def to_s
+      "Component '#{name}' #{id}"
+    end
+    alias :inspect :to_s
   end
 end
