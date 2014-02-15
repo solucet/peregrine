@@ -1,4 +1,9 @@
 # Peregrine
+[![Build Status](https://travis-ci.org/solucet/peregrine.png?branch=master)][travis]
+[![Coverage Status](https://coveralls.io/repos/solucet/peregrine/badge.png)][coverage]
+[![Gem Version](https://badge.fury.io/rb/peregrine.png)][gem]
+[![Documentation](http://b.repl.ca/v1/yard-docs-blue.png)][yard]
+
 1. _adjective: foreign; alien; wandering, traveling, or migrating._
 2. _noun: a kick-ass falcon._
 
@@ -21,7 +26,7 @@ $ cd peregrine/ && bundle
 ```
 
 ## Documentation
-The framework has been heavily documented with information and should serve you well. If you installed Peregrine from the GitHub repository and installed the development dependencies, you can generate a local copy of its RDoc documentation by running `rake rdoc`. The documentation is also available [online from RubyDoc][rdoc].
+The framework has been heavily documented with information and should serve you well. If you installed Peregrine from the GitHub repository and installed the development dependencies, you can generate a local copy of its RDoc documentation by running `rake rdoc`. The documentation is also available [online from RubyDoc][yard].
 
 If you are unfamiliar with Entity-Component design, it is highly recommended that you read about it in addition to reading the documentation for the Peregrine framework. Chris Powell wrote a [great series of tutorials][recf-tutorial] on using EC design in JRuby on his blog which also includes links to further reading on the subject.
 
@@ -31,7 +36,11 @@ Special thanks go to Chris Powell, as the Peregrine framework was conceptually i
 ## License
 Peregrine is made available under the terms of the MIT License. See the included LICENSE file for more information.
 
+
+[coverage]:      https://coveralls.io/r/solucet/peregrine
+[gem]:           http://badge.fury.io/rb/peregrine
 [peregrine]:     https://github.com/solucet/peregrine
-[rdoc]:          http://rubydoc.info/gems/peregrine/0.1.1/frames
 [recf]:          https://github.com/cpowell/ruby-entity-component-framework
 [recf-tutorial]: http://cbpowell.wordpress.com/2012/10/30/
+[travis]:        https://travis-ci.org/solucet/peregrine
+[yard]:          http://rubydoc.info/gems/peregrine/frames

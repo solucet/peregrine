@@ -154,6 +154,18 @@ module Peregrine
       removed.extend(Collections::Common, Collections::Systemic)
     end
     
+    # Unwraps the given Package, adding any included System and Entity instances
+    # directly to the EntityManager. Returns +true+ if the package was unwrapped
+    # successfully, +false+ otherwise.
+    def add_package(package)
+      return false unless package.respond_to?(:unwrap)
+      package.unwrap.each do |item|
+        add_system(item) if item.kind_of?(Peregrine::System)
+        add_entity(item) if item.kind_of?(Peregrine::Entity)
+      end
+      true
+    end
+    
     # Presents a human-readable summary of the EntityManager.
     def to_s
       "Entity Manager '#{name}' #{id} " <<

@@ -4,6 +4,7 @@ class TestComponent < Peregrine::Component; end
 
 describe Peregrine::EntityManager do
   let(:manager) { Peregrine::EntityManager }
+  let(:package) { Peregrine::Package }
   let(:prepared_manager) do
     Peregrine::EntityManager.new do |em|
       em.add_system(Peregrine::System)
@@ -194,6 +195,32 @@ describe Peregrine::EntityManager do
       extensions = subject.remove_systems!.singleton_class.included_modules
       expect(extensions).to include Peregrine::Collections::Common
       expect(extensions).to include Peregrine::Collections::Systemic
+    end
+  end
+  
+  describe '#add_package' do
+    context 'given valid Package' do
+      it 'returns true' do
+        expect(subject.add_package(package.new)).to be true
+      end
+      
+      it 'adds packaged Entities' do
+        pkg = package.new(Peregrine::Entity.new { |e| e.name = 'Test' })
+        subject.add_package(pkg)
+        expect(subject.entities.first.name).to eql 'Test'
+      end
+      
+      it 'adds packaged Systems' do
+        pkg = package.new(Peregrine::System.new { |s| s.name = 'Test' })
+        subject.add_package(pkg)
+        expect(subject.systems.first.name).to eql 'Test'
+      end
+    end
+    
+    context 'given invalid Package' do
+      it 'returns false' do
+        expect(subject.add_package(:invalid)).to be false
+      end
     end
   end
 end
