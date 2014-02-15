@@ -73,6 +73,12 @@ namespace :gem do
   task :clean do
     rm_r 'pkg/' if File.directory?('pkg/')
   end
+
+  desc 'Force build of gem in pkg/ from gemspec'
+  task :force => :pkg do
+    sh 'gem build peregrine.gemspec'
+    mv "peregrine-#{Peregrine::VERSION}.gem", 'pkg/'
+  end
   
   desc 'Build and install latest local gem'
   task :install => :build do
